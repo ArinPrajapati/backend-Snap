@@ -1,0 +1,107 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+.env
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Ignore system and temporary files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+# Ignore text editor and IDE files
+*.bak
+*.log
+*.cache
+.idea/
+.vscode/
+# Ignore build and dependency directories
+node_modules/
+dist/
+build/
+bin/
+out/
+target/
+# Ignore operating system generated files
+.DS_Store
+thumbs.db
+ehthumbs.db
+# Ignore package manager files
+npm-debug.log
+yarn-error.log
+yarn-error.log.*
+# Ignore runtime and compiled files
+*.env
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.dylib
+# Ignore database files
+*.sqlite
+*.sqlite3
+# Ignore logs and databases
+*.log
+*.sql
+# Ignore archives and compressed files
+*.zip
+*.gz
+*.tar
+*.rar
+*.7z
+# Ignore images
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.ico
+# Ignore video
+# *.mp4
+# *.avi
+# Ignore backup files
+*.backup
+*.bak
+*.old
+*.swp
+
+# Ignore user-specific files
+sensitive_file.txt
+secret_key.ini
+/.env
