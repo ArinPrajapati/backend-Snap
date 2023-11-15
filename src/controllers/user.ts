@@ -98,7 +98,7 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
 
     // Sanitizing user inputs
     const sanitizedUsername = sanitizeInput(username);
-    // You can sanitize password similarly if needed
+    // You can sanitize the password similarly if needed
 
     // Check if the username exists in the database
     const existingUser = await User.findOne({ username: sanitizedUsername });
@@ -118,16 +118,22 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
     }
 
     // Password matches, user is authenticated
-    // You can generate and send a JWT token for authentication
-
-    // For example:
+    // Generate a JWT token
     const token = jwt.sign(
       { userId: existingUser._id },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
 
-    return res.status(200).json({ token });
+    // Set the JWT token in a cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+
+    return res.status(200).json({ token: token });
   } catch (error) {
     console.error("Error during login:", error);
     return res.status(500).json({ message: "Internal server error" });
@@ -139,13 +145,20 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
 //@access on logged user
 const currentUser = asyncHandler(async (req: Request, res: Response) => {
   console.log(req.data);
-  return res.json({ userId: req.data.userId });
-});
+  // return res.json({ userId:  });
+  const userId = req.data.userId; // Assuming the user ID is passed as a parameter
+  const user = await User.findById(userId).select("-password");
 
+  if (!user) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  res.status(200).json(user);
+});
 
 //@route is get /api/current
 //@use get's user id from token
-//@access only admin    
+//@access only admin
 
 const getAllUser = asyncHandler(async (req: Request, res: Response) => {
   try {
@@ -157,22 +170,26 @@ const getAllUser = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 
-const getUserById = asyncHandler(async (req: Request, res: Response) => {
-    try {
-      const userId = req.params.id; // Assuming the user ID is passed as a parameter
-      const user = await User.findById(userId);
-  
-      if (!user) {
-        return res.status(404).json({ error: 'User not found' });
-      }
-  
-      res.status(200).json(user);
-    } catch (error) {
-      console.error('Error getting user by ID:', error);
-      return res.status(500).json({ error: 'Internal server error' });
+const updateUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.id; // Assuming the user ID is passed as a parameter
+    const updatedFields: Partial<user> = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      updatedFields,
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
     }
-  });
-  
 
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
 
-export { createUser, loginUser, currentUser , getAllUser,getUserById };
+export { createUser, loginUser, currentUser, getAllUser, updateUser };

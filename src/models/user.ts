@@ -1,5 +1,10 @@
-import { model, Schema } from 'mongoose';
-import { user } from '../types/types';
+import { model, Schema } from "mongoose";
+import { user } from "../types/types";
+
+interface IUser extends Document {
+  // Other properties...
+  userPosts: string[]; // Assuming userPosts is an array of post IDs (strings)
+}
 
 const userSchema = new Schema<user>({
   username: {
@@ -34,8 +39,20 @@ const userSchema = new Schema<user>({
     type: Boolean,
     default: false,
   },
+  comments: {
+    type: [Schema.Types.ObjectId],
+    ref: "Post",
+    default: [],
+  },
+  userPosts: [{ type: Schema.Types.ObjectId, ref: "Post",default: [] }],
+
+  likes: {
+    type: [Schema.Types.ObjectId],
+    ref: "Post",
+    default: [],
+  },
 });
 
-const UserModel = model<user>('User', userSchema);
+const UserModel = model<user>("User", userSchema);
 
 export default UserModel;

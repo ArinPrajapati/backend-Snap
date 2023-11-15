@@ -7,7 +7,7 @@ import {
   currentUser,
   getAllUser,
   loginUser,
-  getUserById,
+
   // upadateUser
 } from "../controllers/user";
 
@@ -16,8 +16,6 @@ router.get("/all", getAllUser);
 router.post("/create", createUser);
 
 router.post("/login", loginUser);
-
-router.get("/user/:id", getUserById);
 
 // router.put("/upadate", upadateUser);
 
