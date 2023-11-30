@@ -3,11 +3,11 @@ import { createPost, deletePost, getAllPosts, getByPostId, getPostUserId } from 
 const router = express.Router();
 
 
-router.get('/post',getAllPosts)
-router.get('/post/:id',getByPostId)
-router.get('/post/user/:id',getPostUserId)
+router.get('/',getAllPosts)
+router.get('/:id',getByPostId)
+router.get('/user/:id',getPostUserId)
 router.delete('/delete/:id',deletePost)
 router.post('/create',createPost)
 
 
-export { router };
+export { router };       

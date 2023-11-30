@@ -29,8 +29,8 @@ const createPost = async (req: Request, res: Response) => {
 
     // user id validation
     const user = await User.findById(userId);
-      console.log(user);
-      console.log(userId);
+    console.log(user);
+    console.log(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -43,12 +43,8 @@ const createPost = async (req: Request, res: Response) => {
       postImg,
     });
 
-   
     // Save the post to the database
     const savedPost = await newPost.save();
-
-    user.userPosts.push(savedPost._id.toString()); // Assuming _id is the post ID
-    await user.save();
 
     res.status(201).json(savedPost);
   } catch (error: any) {
@@ -58,7 +54,7 @@ const createPost = async (req: Request, res: Response) => {
 
 const getByPostId = async (req: Request, res: Response) => {
   try {
-    const { postId } = req.params;
+    const postId = req.params.id;
     const post = await Post.findById(postId);
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
@@ -71,7 +67,7 @@ const getByPostId = async (req: Request, res: Response) => {
 
 const getPostUserId = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
+    const userId = req.params.id;
     const posts = await Post.find({ userId });
     if (!posts) {
       return res.status(404).json({ message: "Posts not found" });
@@ -84,7 +80,7 @@ const getPostUserId = async (req: Request, res: Response) => {
 
 const deletePost = async (req: Request, res: Response) => {
   try {
-    const { postId } = req.params;
+    const postId = req.params.id;
 
     // Check if the post exists
     const existingPost = await Post.findById(postId);
@@ -103,7 +99,7 @@ const deletePost = async (req: Request, res: Response) => {
 
 const updatePost = async (req: Request, res: Response) => {
   try {
-    const { postId } = req.params;
+    const postId = req.params.id;
     const { title, postMessage, postImg } = req.body;
 
     // Check if the post exists

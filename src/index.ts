@@ -8,9 +8,10 @@ import * as post from "./routes/post";
 import connectDB from "./config/connectDB";
 import imageUpload from "./routes/imageUpload";
 import * as dotenv from "dotenv";
-import * as cors from 'cors';
-dotenv.config();
+import * as cors from "cors";
+import * as commnet from "./routes/commnet";
 
+dotenv.config();
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -23,14 +24,13 @@ if (!fs.existsSync(uploadDirectory)) {
   fs.mkdirSync(uploadDirectory);
 }
 
-
 const app = express();
-const PORT = 3000; 
+const PORT = 3000;
 
 const corsOptions: cors.CorsOptions = {
-  origin: 'http://localhost:5173', // specify the allowed origin
-  methods: 'GET,POST,PUT,DELETE', // specify the allowed HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization' ,], // specify the allowed headers
+  origin: "http://localhost:5173", // specify the allowed origin
+  methods: "GET,POST,PUT,DELETE", // specify the allowed HTTP methods
+  allowedHeaders: ["Content-Type", "Authorization"], // specify the allowed headers
 };
 
 app.use(cors(corsOptions));
@@ -44,14 +44,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // User Routes
 app.use("/user", userRoutes.router);
-// comment route
+// Post route
 
-app.use('/post', post.router);
+app.use("/post", post.router);
 
+// comment on post route
+app.use("/comment", commnet.router);
 
 // Image upload route
 app.use("/image", imageUpload);
-
 
 // Start the server
 app.listen(PORT, () => {

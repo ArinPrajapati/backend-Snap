@@ -6,6 +6,7 @@ import {
   createUser,
   currentUser,
   getAllUser,
+  getUserById,
   loginUser,
 
   // upadateUser
@@ -16,6 +17,8 @@ router.get("/all", getAllUser);
 router.post("/create", createUser);
 
 router.post("/login", loginUser);
+
+router.get("/userid/:id", getUserById);
 
 // router.put("/upadate", upadateUser);
 

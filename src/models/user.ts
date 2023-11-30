@@ -39,18 +39,21 @@ const userSchema = new Schema<user>({
     type: Boolean,
     default: false,
   },
-  comments: {
-    type: [Schema.Types.ObjectId],
-    ref: "Post",
-    default: [],
-  },
-  userPosts: [{ type: Schema.Types.ObjectId, ref: "Post",default: [] }],
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+      default: [],
+    },
+  ],
 
-  likes: {
-    type: [Schema.Types.ObjectId],
-    ref: "Post",
-    default: [],
-  },
+  likes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+      default: [],
+    },
+  ],
 });
 
 const UserModel = model<user>("User", userSchema);

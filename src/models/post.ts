@@ -18,6 +18,7 @@ interface SocialMediaPost {
   comments: Comment[];
   likes: Like[];
   title: string;
+  TimeStamp: Date;
 }
 
 const socialMediaPostSchema = new Schema<SocialMediaPost>({
@@ -64,6 +65,10 @@ const socialMediaPostSchema = new Schema<SocialMediaPost>({
       },
     },
   ],
+  TimeStamp: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const SocialMediaModel = model<SocialMediaPost>(

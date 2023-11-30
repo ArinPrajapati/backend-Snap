@@ -146,6 +146,7 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
 const currentUser = asyncHandler(async (req: Request, res: Response) => {
   console.log(req.data);
   // return res.json({ userId:  });
+
   const userId = req.data.userId; // Assuming the user ID is passed as a parameter
   const user = await User.findById(userId).select("-password");
 
@@ -170,6 +171,19 @@ const getAllUser = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 
+const getUserById = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.id; // Assuming the user ID is passed as a parameter
+    const user = await User.findById(userId);
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error getting user:", error);
+    return res.status(500).json({ error: error.message });
+    
+  }
+  
+}
+
 const updateUser = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id; // Assuming the user ID is passed as a parameter
@@ -192,4 +206,4 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-export { createUser, loginUser, currentUser, getAllUser, updateUser };
+export { createUser, loginUser, currentUser, getAllUser, updateUser , getUserById};
