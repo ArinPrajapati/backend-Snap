@@ -32,7 +32,7 @@ const PORT = 4000;
 console.log(process.env.Email_USERNAME);
 
 const corsOptions: cors.CorsOptions = {
-  origin: "http://localhost:5173", // specify the allowed origin
+  origin: process.env.BASE_URL, // specify the allowed origin
   methods: ["GET", "POST", "PUT", "DELETE"], // specify the allowed HTTP methods
   allowedHeaders: ["Content-Type", "Authorization"], // specify the allowed headers
 };
