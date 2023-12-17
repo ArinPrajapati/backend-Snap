@@ -3,6 +3,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface IComment extends Document {
   commentContent: string;
   postId: string;
+  username: string;
   userId: string;
   timestamp: Date;
 }
@@ -11,6 +12,7 @@ const commentSchema: Schema = new Schema({
   commentContent: { type: String, required: true },
   postId: { type: Schema.Types.ObjectId, ref: 'socialmedias', required: true },
   userId: { type: Schema.Types.ObjectId, ref: 'users', required: true },
+  username:{type: String, required: true},
   timestamp: { type: Date, default: Date.now }
 });
 

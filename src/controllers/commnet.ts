@@ -7,15 +7,15 @@ import User from "../models/user";
 
 // Load environment variables
 dotenv.config();
-
+ 
 const createComment = async (req: Request, res: Response) => {
   try {
-    const { postId, commentContent, userId } = req.body;
+    const { postId, commentContent, userId, username } = req.body;
 
-    if (!postId || !commentContent || !userId) {
+    if (!postId || !commentContent || !userId || !username) {
       return res
         .status(400)
-        .json({ message: "Please provide postId, comment, and userId" });
+        .json({ message: "Please provide postId, comment, and userId and username" });
     }
 
     const postExist = await Post.findById(postId);
@@ -32,6 +32,7 @@ const createComment = async (req: Request, res: Response) => {
       postId,
       commentContent,
       userId,
+      username,
     });
 
     if (!commentCreated) {

@@ -13,6 +13,7 @@ interface Comment {
 
 interface SocialMediaPost {
   userId: string;
+  username: string;
   postMessage: string;
   postImg?: string;
   comments: Comment[];
@@ -23,6 +24,10 @@ interface SocialMediaPost {
 
 const socialMediaPostSchema = new Schema<SocialMediaPost>({
   userId: {
+    type: String,
+    required: true,
+  },
+  username: {
     type: String,
     required: true,
   },

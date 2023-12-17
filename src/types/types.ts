@@ -1,6 +1,8 @@
 import { SchemaDefinitionProperty } from "mongoose";
 
 export interface user extends Document {
+  _id?: any;
+  resetToken: string | null;
   username: string;
   name: string;
   password: string;
@@ -9,7 +11,5 @@ export interface user extends Document {
   profileImg?: string;
   isVerify: boolean;
   isAdmin: boolean;
-  comments: string[] | SchemaDefinitionProperty<string[]>;
-  userPosts: string[] ;
-  likes: string[] | SchemaDefinitionProperty<string[]>;
 }
+  

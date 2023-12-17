@@ -20,7 +20,7 @@ const getAllPosts = async (req: Request, res: Response) => {
 
 const createPost = async (req: Request, res: Response) => {
   try {
-    const { title, userId, postMessage, postImg } = req.body;
+    const { title, userId, postMessage, postImg ,username } = req.body;
     if (!userId && !postMessage && !title) {
       return res
         .status(400)
@@ -38,6 +38,7 @@ const createPost = async (req: Request, res: Response) => {
     // Create a new post
     const newPost = new Post({
       userId,
+      username,
       title,
       postMessage,
       postImg,
@@ -47,6 +48,39 @@ const createPost = async (req: Request, res: Response) => {
     const savedPost = await newPost.save();
 
     res.status(201).json(savedPost);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const likePost = async (req: Request, res: Response) => {
+  
+  try {
+    const postId = req.params.id;
+    const { userId, userName } = req.body;
+
+    // Check if the post exists
+    const existingPost = await Post.findById(postId);
+    if (!existingPost) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    // Check if the user has already liked the post
+    const alreadyLiked = existingPost.likes.some(
+      (like) => like.userId === userId
+    );
+
+    if (alreadyLiked) {
+      return res.status(400).json({ message: "Post already liked" });
+    }
+
+    // Add the new like
+    existingPost.likes.push({ userId, userName });
+
+    // Save the updated post
+    const updatedPost = await existingPost.save();
+
+    res.status(200).json(updatedPost);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
@@ -130,4 +164,5 @@ export {
   deletePost,
   getByPostId,
   getPostUserId,
+  likePost,
 };
