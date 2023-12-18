@@ -31,13 +31,7 @@ const PORT = 4000;
 
 console.log(process.env.Email_USERNAME);
 
-const corsOptions: cors.CorsOptions = {
-  origin: process.env.BASE_URL, // specify the allowed origin
-  methods: ["GET", "POST", "PUT", "DELETE"], // specify the allowed HTTP methods
-  allowedHeaders: ["Content-Type", "Authorization"], // specify the allowed headers
-};
-
-app.use(cors(corsOptions));
+app.use(cors({ origin: '*' }));
 
 // MongoDB connection setup
 connectDB();
